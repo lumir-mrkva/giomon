@@ -1,0 +1,14 @@
+<status>
+  <windspeed>1.5</windspeed>
+  <winddir>6</winddir>
+  <windgust>1.5</windgust>
+  <pressure>995.9</pressure>
+  <systemp>22.0</systemp>
+  <temperature>9.9</temperature>
+  <baraltitude>574.0</baraltitude>
+  <windchill>9.9</windchill> 
+  <relhumidity>77.3</relhumidity>
+  <abshumidity>6.9</abshumidity> 
+  <dewpoint>6.1</dewpoint> 
+  <devname>MRQGIOM        </devname> 
+</status>

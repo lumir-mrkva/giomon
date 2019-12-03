@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+    ports:
+     - 3000:3000
+    volumes:
+     - grafana-data:/var/lib/grafana
+    networks:
+     - net
+    logging:
+      driver: json-file
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+        limits:
+          memory: 256M 
+  influx:
+    image: influxdb:1.7
+    ports:
+     - 8086:8086
+    volumes:
+     - influx-data:/var/lib/influxdb
+    networks:
+     - net
+    logging:
+      driver: json-file
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+        limits:
+          memory: 256M
+networks:
+  net:
+    driver: overlay
+volumes:
+  influx-data:
+    driver: local
+  grafana-data:
+    driver: local
