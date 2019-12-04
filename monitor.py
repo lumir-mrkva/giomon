@@ -3,7 +3,6 @@
 from xml.dom import minidom
 from datetime import datetime
 import time
-import pytz
 import schedule
 import _thread
 import os
@@ -19,9 +18,8 @@ db.query('CREATE DATABASE giomon WITH SHARD DURATION 30d NAME myrp')
 
 
 def measure():
-    date = datetime.now()
-    date = pytz.timezone("Europe/Prague").localize(date)
-    # print(f'taking measurement @ {date}')
+    date = datetime.utcnow()
+    print(f'taking measurement @ {date}')
     xml = request.urlopen(f'{giom}/status.xml').read()
     status = minidom.parseString(xml)
 
