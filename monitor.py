@@ -13,7 +13,7 @@ from influxdb import InfluxDBClient
 
 interval = 10  # seconds
 giom = os.getenv("GIOMON_GIOM", "http://10.0.0.5")
-db = InfluxDBClient(os.getenv("GIOMON_DB_ADDRESS", "localhost"),
+db = InfluxDBClient(os.getenv("GIOMON_DB_ADDRESS", "10.0.0.54"),
                     os.getenv("GIOMON_DB_PORT", "8086"), 'root', 'root', 'giomon')
 db.query('CREATE DATABASE giomon WITH SHARD DURATION 30d NAME myrp')
 
