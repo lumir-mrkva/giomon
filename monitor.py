@@ -3,7 +3,9 @@ from datetime import datetime
 import time
 import pytz
 import schedule
+import _thread
 from urllib import request
+
 from influxdb import InfluxDBClient
 
 interval = 10  # seconds
@@ -46,9 +48,13 @@ def measure():
     db.write_points(data)
 
 
-schedule.every(interval).seconds.do(measure)
+def measure_async():
+    _thread.start_new_thread(measure, ())
 
+
+schedule.every(interval).seconds.do(measure_async)
+
+print(f"taking measurement every {interval} seconds")
 while 1:
-    print(f"taking measurement every {interval}")
     schedule.run_pending()
     time.sleep(1)
