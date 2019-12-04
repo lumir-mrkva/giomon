@@ -1,11 +1,14 @@
 [Unit]
 Description=Giomon monitor
 After=multi-user.target
+Requires=influxdb.service
 Conflicts=getty@tty1.service
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/python3 /usr/bin/monitor.py
+Restart=always
+RestartSec=3
 StandardInput=tty-force
 
 [Install]
