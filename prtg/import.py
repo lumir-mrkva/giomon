@@ -4,7 +4,7 @@ import csv
 import sys
 import pytz
 
-server = "localhost"
+server = "10.0.0.54"
 port = 8086
 files = sys.argv[1:]
 
@@ -28,13 +28,13 @@ for file in files:
                              "fields": {
                                  "value": float(list(row.values())[3])
                              }})
-                print(data[len(data)-1])
+                #print(data[len(data)-1])
             except ValueError:
                 pass
             line_count += 1
     if len(data) > 0:
         print(f'from {data[0]["time"]} to {data[len(data)-1]["time"]}')
-        # db = InfluxDBClient(server, port, 'root', 'root', 'giomon')
-        # db.query('CREATE DATABASE giomon WITH SHARD DURATION 30d NAME myrp')
-        # db.write_points(data)
+        db = InfluxDBClient(server, port, 'root', 'root', 'giomon')
+        db.query('CREATE DATABASE giomon WITH SHARD DURATION 30d NAME myrp')
+        db.write_points(data)
     print(f'imported {len(data)} measurements')
