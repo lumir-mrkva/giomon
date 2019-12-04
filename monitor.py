@@ -1,23 +1,27 @@
+#!/usr/bin/python3
+
 from xml.dom import minidom
 from datetime import datetime
 import time
 import pytz
 import schedule
 import _thread
+import os
 from urllib import request
 
 from influxdb import InfluxDBClient
 
 interval = 10  # seconds
-giom = "http://10.0.0.5"
-db = InfluxDBClient("10.0.0.54", "8086", 'root', 'root', 'giomon')
+giom = os.getenv("GIOMON_GIOM", "http://10.0.0.5")
+db = InfluxDBClient(os.getenv("GIOMON_DB_ADDRESS", "localhost"),
+                    os.getenv("GIOMON_DB_PORT", "8086"), 'root', 'root', 'giomon')
 db.query('CREATE DATABASE giomon WITH SHARD DURATION 30d NAME myrp')
 
 
 def measure():
     date = datetime.now()
     date = pytz.timezone("Europe/Prague").localize(date)
-    print(f'taking measurement @ {date}')
+    # print(f'taking measurement @ {date}')
     xml = request.urlopen(f'{giom}/status.xml').read()
     status = minidom.parseString(xml)
 
