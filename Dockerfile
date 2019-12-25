@@ -5,6 +5,6 @@ ENV GIOMON_DB_ADDRESS influx
 ENV PYTHONUNBUFFERED 1
 ADD requirements.txt .
 RUN pip3 install -r requirements.txt
-ADD monitor.py .
+ADD . .
 
 CMD ["/usr/local/bin/python3", "/app/monitor.py"]
