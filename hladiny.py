@@ -1,8 +1,9 @@
 from urllib import request
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 flatten = lambda l: [item for sublist in l for item in sublist]
+normalize_date = lambda t: datetime.fromtimestamp(int(t)) - timedelta(hours=1)
 
 
 def url(id):
@@ -21,12 +22,12 @@ def fetch(id):
     res = request.urlopen(url(id))
     data = json.loads(res.read())
     name = data['label1']
-    date = datetime.fromtimestamp(int(data['ch_last_data']['0']))
+    date = normalize_date(data['ch_last_data']['0'])
     value = float(data['ch_value']['0'])
     history = data['ch_history']['0']
     measurements = [measurement(name, value, date)]
     for timestamp in history.keys():
-        measurements.append(measurement(name, float(history[timestamp]), datetime.fromtimestamp(int(timestamp))))
+        measurements.append(measurement(name, float(history[timestamp]), normalize_date(timestamp)))
 
     return measurements
 
